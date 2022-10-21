@@ -18,7 +18,6 @@ public class Main {
         System.out.println(isRightParenthSeq("[[(())()(())]]"));
         //Либо предпоследний на ')'. Вариантов может быть много.
         System.out.println(isRightParenthSeq("[((())()(()))]"));
-
     }
 
     //Составить алгоритм: если введенное число больше 7, то вывести “Привет”
