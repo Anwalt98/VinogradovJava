@@ -16,7 +16,7 @@ public class Main {
         //Чтобы она стала правильной, нужно, например, изменить символ с индексом [1] на '['.
         //Пример ниже.
         System.out.println(isRightParenthSeq("[[(())()(())]]"));
-        //Также иже приведены примеры правильных скобочных последовательностей
+        //Также ниже приведены примеры правильных скобочных последовательностей
         System.out.println(isRightParenthSeq("[][(){}()]"));
         System.out.println(isRightParenthSeq("()"));
         System.out.println(isRightParenthSeq("{}"));
