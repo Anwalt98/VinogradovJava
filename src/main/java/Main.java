@@ -139,15 +139,16 @@ public class Main {
                     for (int ik = 0; ik < copy.length(); ik++) {
                         if (copy.charAt(ik) != '0') {
                             isMultiple = false;
+                            break;
                         }
+                    }
                         if (isMultiple) {
                             Double l = Double.parseDouble(num);
                             list.add(l.longValue());
                         }
-                        isMultiple = true;
+
                     }
                 }
-            }
             catch (NumberFormatException numberFormatException) {
                     System.out.println("You have to input number.");
                     j--;
