@@ -106,63 +106,90 @@ public class Main {
     // Составить алгоритм: на входе есть числовой массив, необходимо вывести элементы массива кратные 3.
     // P.S. в целях интерактивного взаимодействия с пользователем,
     // числовой массив получаем через ввод в консоль внутри функции.
-    // Предполагается допущение, что введенные числа будут в диапазоне значений Long;
-    // дробные числа вводятся с '.' и выводятся преобразованными в Long,в случае, если кратны 3
+    // Числа обрабатываются по принципу: складываем каждое, если сумма кратна 3, выводим.
+    // Если дробное - ищем точку, проверяем дробный остаток. Если он 0, делаем действия для целой части по пункту выше.
     public static void thirdTask() {
         System.out.println("Provide any natural number N, it will be size of an array.");
         Scanner sc = new Scanner(System.in);
         try {
             int i = sc.nextInt();
             System.out.println("Provide N numbers, to find multiple 3 in the row.");
-            ArrayList<Long> list = addNumbersToArray(i);
-            printMultipleOfThree(list);
+            ArrayList<String> list = addNumbersToArray(i);
+            System.out.println(list);
         } catch (InputMismatchException inputMismatchException) {
             System.out.println("You have to input number.");
             thirdTask();
         }
     }
 
-    public static ArrayList<Long> addNumbersToArray(Integer i) {
+    public static ArrayList<String> addNumbersToArray(Integer i) {
         Scanner sc = new Scanner(System.in);
-        ArrayList<Long> list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>();
         String num = "";
+        String number;
+        Integer counter = 0;
         for (int j = 0; j < i; j++) {
-            num = sc.nextLine();
+            number = sc.nextLine();
+            num = number;
+            if (number.equals("") || number.equals("0") || number.equals("-0") || number.equals("+0")) {
+                continue;
+            }
+            if (num.charAt(0) == '-') {
+                num = num.substring(1);
+            }
+            if (num.charAt(0) == '+') {
+                num = num.substring(1);
+            }
+            for (int k = 0; k < num.length(); k++) {
+                if (num.charAt(k) != '0') {
+                    num = num.substring(k);
+                    break;
+                }
+            }
+            boolean numeric = num.matches("-?\\d+(\\.\\d+)?");
+            if (!numeric) continue;
             int pos = num.lastIndexOf(".");
-            try {
-                if (pos == -1) {
-                    Long f = Long.parseLong(num);
-                    list.add(f);
-                } else {
-                    String copy = num.substring(pos + 1);
-                    boolean isMultiple = true;
-                    for (int ik = 0; ik < copy.length(); ik++) {
-                        if (copy.charAt(ik) != '0') {
-                            isMultiple = false;
+
+            if (pos == -1) {
+                for (int k = 0; k < num.length(); k++) {
+                    Character ch = num.charAt(k);
+                    counter += Integer.parseInt(String.valueOf(ch));
+                    boolean b = Character.isDigit(ch);
+                    if (!b) {
+                        break;
+                    }
+                }
+                if (counter % 3 == 0) {
+                    list.add(number);
+                }
+            } else {
+                String copy = num.substring(pos + 1);
+                boolean isMultiple = true;
+                for (int ik = 0; ik < copy.length(); ik++) {
+                    if (copy.charAt(ik) != '0') {
+                        isMultiple = false;
+                        break;
+                    }
+                }
+                if (isMultiple) {
+                    num = num.substring(0,pos);
+                    for (int k = 0; k < num.length(); k++) {
+                        Character ch = num.charAt(k);
+                        counter += Integer.parseInt(String.valueOf(ch));
+                        boolean b = Character.isDigit(ch);
+                        if (!b) {
                             break;
                         }
                     }
-                        if (isMultiple) {
-                            Double l = Double.parseDouble(num);
-                            list.add(l.longValue());
-                        }
-
+                    if (counter % 3 == 0) {
+                        list.add(number);
                     }
-                }
-            catch (NumberFormatException numberFormatException) {
-                    System.out.println("You have to input number.");
-                    j--;
-                }
-            }
-        return list;
-    }
 
-    public static void printMultipleOfThree(ArrayList<Long> list) {
-        List<Long> listToPrint = list
-                .stream()
-                .filter(integer -> integer % 3 == 0 && integer != 0)
-                .collect(Collectors.toList());
-        System.out.println(listToPrint);
+                }
+
+            }
+        }
+        return list;
     }
 
 
