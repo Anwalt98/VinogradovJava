@@ -169,6 +169,9 @@ public class Main {
 
 
     private static boolean isRightParenthSeq(String inputStr) {
+        if (Objects.equals(inputStr, "")){
+            return true;
+        }
         Stack stack = new Stack();
         char[] charArray = inputStr.toCharArray();
         for (int i = 0; i < charArray.length; i++) {
